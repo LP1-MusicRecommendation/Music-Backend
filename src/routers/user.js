@@ -1,13 +1,45 @@
 const express = require("express");
-
+const passport = require("passport");
 const router = new express.Router();
+const jwt = require("jsonwebtoken");
+const User = require("../models/user-model");
+const auth = require("../auth/auth");
 
-router.post("/auth/login", async (req, res) => {
+router.post("/user/signup", async (req, res) => {
+  const user = new User(req.body);
   try {
-    res.send("HELLO");
+    await user.save();
+    console.log(user);
+    const token = await user.generateAuthToken();
+    console.log(token);
+    res.status(201).send({ user, token });
   } catch (e) {
-    console.log("Error: ", e);
-    res.status(400);
+    res.status(400).send(e);
+  }
+});
+
+router.post("/user/login", async (req, res) => {
+  try {
+    const user = await User.findByCredentials(
+      req.body.email,
+      req.body.password
+    );
+    const token = await user.generateAuthToken();
+    res.send({ user, token });
+  } catch (e) {
+    res.status(400).send(e);
+  }
+});
+
+router.post("/user/logout", auth, async (req, res) => {
+  try {
+    req.user.tokens = req.user.tokens.filter((token) => {
+      return token.token !== req.token;
+    });
+    await req.user.save();
+    res.send("Logged out succesfully");
+  } catch (e) {
+    res.status(500).send();
   }
 });
 

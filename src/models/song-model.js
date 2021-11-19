@@ -30,6 +30,6 @@ const songSchema = new schema({
   },
 });
 
-const Song = mongoose.model("Song", songSchema, "Songs"); // only checks lower case pluralized names
+const Song = mongoose.model("song", songSchema);
 
 module.exports = Song;

@@ -5,7 +5,8 @@ const schema = mongoose.Schema;
 
 const songSchema = new schema({
     AlbumID : {
-        type : Number,
+        // type : Number,
+        type : String,
         required : true
     },
     AlbumName : {
@@ -17,7 +18,8 @@ const songSchema = new schema({
         required : true
     },
     Duration : {
-        type : Decimal128,
+        // type : Decimal128,
+        type : String,
         required : true
     },
     Title : {
@@ -25,15 +27,17 @@ const songSchema = new schema({
         required : true
     },
     Year : {
-        type : Number,
-        required : true
-    },
-    Category : {
+        // type : Number,
         type : String,
         required : true
     }
+    // },
+    // Category : {
+    //     type : String,
+    //     required : true
+    // }
 });
 
-const Song = mongoose.model('song', songSchema);
+const Song = mongoose.model('Song', songSchema, 'Songs'); // only checks lower case pluralized names
 
 module.exports = Song;

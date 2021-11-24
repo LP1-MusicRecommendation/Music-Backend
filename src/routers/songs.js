@@ -14,6 +14,16 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
+router.get("/genres", auth, async (req, res) => {
+  try {
+    const genres = await Song.find().distinct("Genre");
+    res.send(genres);
+  }
+  catch(err){
+    res.status(404).send("Could not send genre list");
+  }
+});
+
 router.get('/sort/:parameter', auth, async (req, res) => {
     const sort = req.body.sort;
     const parameter = req.params.parameter;

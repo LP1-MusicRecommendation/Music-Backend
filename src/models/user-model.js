@@ -40,6 +40,18 @@ const userSchema = new schema({
       },
     },
   ],
+  playlist: [
+    {
+      _id: {
+        type: ObjectId,
+        required: true,
+      },
+      song : {
+        type: String,
+        required : true,
+      }
+    },
+  ]
 });
 
 userSchema.methods.generateAuthToken = async function () {

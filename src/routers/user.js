@@ -1,5 +1,4 @@
 const express = require("express");
-const passport = require("passport");
 const router = new express.Router();
 const jwt = require("jsonwebtoken");
 const User = require("../models/user-model");
@@ -9,9 +8,7 @@ router.post("/user/signup", async (req, res) => {
   const user = new User(req.body);
   try {
     await user.save();
-    console.log(user);
     const token = await user.generateAuthToken();
-    console.log(token);
     res.status(201).send({ user, token });
   } catch (e) {
     res.status(400).send(e);

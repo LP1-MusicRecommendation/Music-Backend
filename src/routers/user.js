@@ -40,13 +40,15 @@ router.post("/user/logout", auth, async (req, res) => {
   }
 });
 
-router.post("/user/playlist", auth, async(req, res) => {
-  try{
-    // const user = User.findById(req.body.userID);
-    const playlist = {_id : req.body.id, song: req.body.name};
-    const user = await User.updateOne({_id : req.body.userID}, {$push : {playlist : playlist}});
-  }
-  catch(err){
+router.post("/user/playlist", auth, async (req, res) => {
+  try {
+    const playlist = { _id: req.body.id, song: req.body.name };
+    const user = await User.updateOne(
+      { email: req.body.email },
+      { $push: { playlist: playlist } }
+    );
+    res.status(201).send("Song added successfully");
+  } catch (err) {
     res.status(500).send("Could not add song to playlist");
   }
 });

@@ -45,8 +45,23 @@ const userSchema = new schema({
       _id: {
         type: String,
       },
-      song: {
+      Title: {
         type: String,
+      },
+      Artist: {
+        type: String,
+      },
+      Genre: {
+        type: String,
+      },
+      Year: {
+        type: Number,
+      },
+      Duration: {
+        type: Number,
+      },
+      Popularity: {
+        type: Number,
       },
     },
   ],

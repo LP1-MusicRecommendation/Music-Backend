@@ -2,6 +2,7 @@ const express = require("express");
 const router = new express.Router();
 const jwt = require("jsonwebtoken");
 const User = require("../models/user-model");
+const Song = require("../models/song-model");
 const auth = require("../auth/auth");
 
 router.post("/user/signup", async (req, res) => {
@@ -42,7 +43,8 @@ router.post("/user/logout", auth, async (req, res) => {
 
 router.post("/user/addtoplaylist", auth, async (req, res) => {
   try {
-    const playlist = { _id: req.body.id, song: req.body.name };
+    const playlist = await Song.findOne({ _id: req.body.id });
+    console.log(playlist);
     const user = await User.updateOne(
       { email: req.body.email },
       { $push: { playlist: playlist } }

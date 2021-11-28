@@ -40,7 +40,7 @@ router.post("/user/logout", auth, async (req, res) => {
   }
 });
 
-router.post("/user/playlist", auth, async (req, res) => {
+router.post("/user/addtoplaylist", auth, async (req, res) => {
   try {
     const playlist = { _id: req.body.id, song: req.body.name };
     const user = await User.updateOne(
@@ -50,6 +50,15 @@ router.post("/user/playlist", auth, async (req, res) => {
     res.status(201).send("Song added successfully");
   } catch (err) {
     res.status(500).send("Could not add song to playlist");
+  }
+});
+
+router.post("/user/playlist", auth, async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    res.status(201).send(user.playlist);
+  } catch (err) {
+    res.status(500).send("Cannot display playlist");
   }
 });
 
